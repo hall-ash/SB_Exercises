@@ -1,5 +1,4 @@
 console.log("Let's get this party started!");
-console.log('hello');
 
 const BASE_SEARCH_ENDPOINT = 'https://api.giphy.com/v1/gifs/search';
 const api_key = 'wII9q9eZn9PfjEcanvMpLgOTcSurfRfa';
@@ -22,7 +21,6 @@ async function getGif() {
     // choose a random a gif between 0 and 49 and get its url
     const { data: gifs } = res.data;
     const url = gifs[Math.floor(Math.random() * 50)].images.original.url; 
-    //const url = gifs[0].images.original.url;
     
     // append gif to gif-container
     $('#gif-container').append(createImg(url));
@@ -44,12 +42,6 @@ $('form').on('submit', function(evt) {
   evt.preventDefault();
   getGif();
 });
-
-// $('form').submit(function(evt) {
-//   evt.preventDefault();
-//   console.log('clicked');
-//   getGif();
-// })
 
 
 $('#remove-gifs-btn').on('click', () => $('#gif-container').text(''));
