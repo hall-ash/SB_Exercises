@@ -1,18 +1,28 @@
-from flask import Flask, request, render_template, redirect, flash, jsonify, url_for
+from flask import Flask, request, render_template, redirect, flash, session, url_for
 from surveys import satisfaction_survey as survey
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "oh-so-secret"
-
-responses = []
 
 @app.route('/')
 def start_survey():
     return render_template('start_survey.html', survey=survey)
 
 
+@app.route('/set', methods=['POST'])
+def set_responses():
+    # set responses to empty list at survey start
+    session['responses'] = []
+
+    return redirect(url_for('question', num=0))
+
+
 @app.route('/questions/<int:num>')
 def question(num):
+    '''Renders view for each question. 'num' is the ordinal number of question.'''
+    
+    responses = session['responses']
+
      # all questions are answered
     if len(responses) == len(survey.questions):
         return redirect(url_for('completed'))
@@ -31,9 +41,14 @@ def question(num):
 
 @app.route('/answer', methods=['POST'])
 def answer():
-    choice = request.form['choice']
+
+    answer = request.form['answer']
     
-    responses.append(choice)
+    # add answer to responses list
+    responses = session['responses']
+    responses.append(answer)
+    session['responses'] = responses
+
     return redirect(url_for('question', num=len(responses)))
 
 
