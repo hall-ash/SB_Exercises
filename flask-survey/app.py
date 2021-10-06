@@ -6,6 +6,7 @@ app.config['SECRET_KEY'] = "oh-so-secret"
 
 @app.route('/')
 def start_survey():
+    # session['responses'] = []
     return render_template('start_survey.html', survey=survey)
 
 
@@ -13,7 +14,6 @@ def start_survey():
 def set_responses():
     # set responses to empty list at survey start
     session['responses'] = []
-
     return redirect(url_for('question', num=0))
 
 
@@ -42,7 +42,7 @@ def question(num):
 @app.route('/answer', methods=['POST'])
 def answer():
 
-    answer = request.form['answer']
+    answer = request.form['choice']
     
     # add answer to responses list
     responses = session['responses']
