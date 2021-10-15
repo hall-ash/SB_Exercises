@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Madlibs{% endblock title %}
+
+{% block content %}
+<form 
+action="{{ url_for('display_story') }}">
+  {% for prompt in prompts %}
+    <div class="mb-3">
+      <label for="{{ prompt }}" class="form-label">{{ prompt }}: </label>
+      <input type="text" class="form-control" id="{{ prompt }}" name="{{ prompt }}" required>
+    </div>
+  {% endfor %}
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock content %}

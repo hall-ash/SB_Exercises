@@ -1,0 +1,37 @@
+body {
+  text-align: center;
+  background-color: black;
+}
+
+h1 {
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 20px;
+  font-size: 5rem;
+}
+
+form {
+  align-items: center;
+  padding: 10px;
+}
+
+#remove-gifs-btn {
+  margin: 10px;
+}
+
+#search-gifs-btn {
+  border: 1px solid darkgray;
+}
+
+.glow:hover {
+  /* border: 1px solid blue; */
+  box-shadow: 0 0 10px white;
+}
+
+#gif-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px 20px;
+  align-items: center;
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet"
+        href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
+  
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.3.0/jasmine.css">
+  <link rel="stylesheet" href="style.css">
+
+  <title>Movie App</title>
+</head>
+<body>
+
+  <h1>Movie App</h1>
+
+  <form>
+    <p>Add a rating:</p>
+    <label for="title">Title:</label>
+    <input type="text" id="title-input" name="title">
+    <label for="rating">Rating:</label>
+    <input id="rating-input" name="rating" type="number" min="0" max="10">
+    <input type="submit" value="Submit" id="submit-btn">
+  </form>
+  
+  <div id="ratings-container">
+    <h3>Your ratings:</h3>
+
+    <div id="sort-btns">
+
+      <button id="title-sort-btn" type="button" class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-up" viewBox="0 0 16 16">
+        <path d="M3.5 12.5a.5.5 0 0 1-1 0V3.707L1.354 4.854a.5.5 0 1 1-.708-.708l2-1.999.007-.007a.498.498 0 0 1 .7.006l2 2a.5.5 0 1 1-.707.708L3.5 3.707V12.5zm3.5-9a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zM7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zm0 3a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z"></path>
+        </svg>
+        A-Z
+      </button>
+      <button id="rating-sort-btn" type="button" class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-up" viewBox="0 0 16 16">
+        <path d="M3.5 12.5a.5.5 0 0 1-1 0V3.707L1.354 4.854a.5.5 0 1 1-.708-.708l2-1.999.007-.007a.498.498 0 0 1 .7.006l2 2a.5.5 0 1 1-.707.708L3.5 3.707V12.5zm3.5-9a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zM7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zm0 3a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z"></path>
+        </svg>
+        Highest rating
+      </button>
+    </div>
+
+  </div>
+
+  <ul class="movie-list"></ul>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="script.js"></script>
+
+  <!-- Jasmine Scripts -->
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.3.0/jasmine.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.3.0/jasmine-html.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.3.0/boot.js"></script> -->
+  <!-- Jasmine Scripts -->
+  
+  <!-- Unit Test Scripts -->
+    <!-- <script type="text/javascript" src="script.test.js"></script> -->
+  <!-- Unit Test Scripts -->
+ 
+</body>
+</html>

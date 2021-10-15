@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ survey.title }}{% endblock title %}
+
+{% block content %}
+
+<div class="container container-fluid">
+  <form action="{{ url_for('set_responses') }}" method="POST">
+    <h1>{{ survey.title }}</h1><br>
+    <h3>{{ survey.instructions }}</h3><br>
+    <button type="submit" class="btn btn-primary">Start</button>
+  </form>
+  
+</div>
+
+
+{% endblock content %}
