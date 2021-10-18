@@ -26,7 +26,7 @@ CREATE TABLE posts (
 	title VARCHAR(20) NOT NULL,
 	body TEXT,
 	author INT REFERENCES users ON DELETE CASCADE,
-	location VARCHAR(30)
+	location VARCHAR(20)
 	region INT REFERENCES regions ON DELETE SET NULL,
 	category INT REFERENCES categories ON DELETE SET NULL
 );
