@@ -15,7 +15,6 @@ alan = User(first_name='Alan', last_name='Alda')
 joel = User(first_name='Joel', last_name='Burton')
 jane = User(first_name='Jane', last_name='Smith')
 
-for user in [alan, joel, jane]:
-    db.session.add(user)
+db.session.add_all([alan, joel, jane])
 
 db.session.commit()
