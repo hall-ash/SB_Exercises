@@ -45,7 +45,7 @@ class UserViewsTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn('first_name1', html)
 
-    def test_new_user(self):
+    def test_user_create_submit(self):
         with app.test_client() as client:
             new_user = {
                 'first_name': 'first_name2', 
@@ -68,7 +68,7 @@ class UserViewsTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("https://images.pexels.com", html)    
 
-    def test_edit_user(self):
+    def test_user_edit(self):
         with app.test_client() as client:
             edited_user = {
                 'first_name': 'edited_first_name',
@@ -82,7 +82,7 @@ class UserViewsTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn('edited_first_name', html)
 
-    def test_delete_user(self):
+    def test_user_delete(self):
         with app.test_client() as client:
 
             resp = client.get(f'/users/{self.user_id}/delete', follow_redirects=True)
@@ -122,7 +122,7 @@ class PostViewsTestCase(TestCase):
     def tearDown(self):
         db.session.rollback()
 
-    def test_new_post_form(self):
+    def test_post_create_form(self):
         with app.test_client() as client:
             endpoint = f'/users/{self.creator_id}/posts/new'
 
@@ -136,7 +136,7 @@ class PostViewsTestCase(TestCase):
             self.assertIn(new_post_form_title, html)
 
 
-    def test_new_post_submit(self):
+    def test_post_create_submit(self):
          with app.test_client() as client:
             endpoint = f'/users/{self.creator_id}/posts/new'
             

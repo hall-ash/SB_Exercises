@@ -1,7 +1,7 @@
 """Blogly application."""
 
 from flask import Flask, render_template, redirect, url_for, request
-from models import db, connect_db, User, Post
+from models import db, connect_db, User, Post, Tag, PostTag
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
@@ -28,7 +28,7 @@ def list_users():
     return render_template('users.html', users=users)
 
 @app.route('/users/new', methods=['GET', 'POST'])
-def new_user():
+def user_create():
     '''Create a new user.'''
 
     if request.method == 'POST':
@@ -47,7 +47,7 @@ def new_user():
 
         return redirect(url_for('list_users'))
     else:
-        return render_template('new-user-form.html')
+        return render_template('user-create-form.html')
 
 
 @app.route('/users/<int:user_id>')
@@ -59,7 +59,7 @@ def user_detail(user_id):
     return render_template('user-detail.html', user=user, posts=user.posts)
 
 @app.route('/users/<int:user_id>/edit', methods=['GET', 'POST'])
-def edit_user(user_id):
+def user_edit(user_id):
     '''Edit user info.'''
 
     user = User.query.get_or_404(user_id)
@@ -79,7 +79,7 @@ def edit_user(user_id):
 
     
 @app.route('/users/<int:user_id>/delete')
-def delete_user(user_id):
+def user_delete(user_id):
     '''Deletes the user.'''
 
     User.query.filter_by(id=user_id).delete()
@@ -90,7 +90,7 @@ def delete_user(user_id):
 
 
 @app.route('/users/<int:user_id>/posts/new', methods=['GET', 'POST'])
-def post_new(user_id):
+def post_create(user_id):
     '''
     Show form to add a post for that user on GET request.
     Handle add form; add post and redirect to the user detail page on POST request.
@@ -111,7 +111,7 @@ def post_new(user_id):
     else:
 
         user = User.query.get_or_404(user_id)
-        return render_template('new-post-form.html', user=user)
+        return render_template('post-create-form.html', user=user)
         
 
 @app.route('/posts/<int:post_id>')

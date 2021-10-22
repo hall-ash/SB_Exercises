@@ -1,31 +1,31 @@
 '''Seed file to make sample data for blogly db'''
 
-from models import User, Post, db 
+from models import User, Post, Tag, PostTag, db 
 from app import app
 from faker import Faker
 from random import randint
 
 fake = Faker()
 
-num_users = 5
-
 def populate_users(num_users):
     '''Generates 'num_users' fake users and adds them to the blogly database.'''
-    Faker.seed(0)
+    Faker.seed(randint(0, 1000))
 
     for _ in range(num_users):
-        user = User(first_name=fake.first_name(), last_name=fake.last_name(), image_url=fake.image_url())
+        user = User(first_name=fake.first_name(), last_name=fake.last_name(), image_url=fake.image_url(width=200, height=200))
         db.session.add(user)
 
     db.session.commit()
 
 
-def populate_posts(num_users, num_posts=20):
+def populate_posts(num_users, posts_per_user=5):
     '''
     Generates 'num_posts' fake posts, assigns them to a random 
     creator_id from [1 to num_users] and adds them to the blogly database.
     '''
-    Faker.seed(0)
+    Faker.seed(randint(0, 1000))
+
+    num_posts = num_users * posts_per_user
 
     for _ in range(num_posts):
         post = Post (
@@ -40,17 +40,40 @@ def populate_posts(num_users, num_posts=20):
     db.session.commit()
 
 
+def populate_tags(num_tags=10):
+    '''
+    Generates 'num_tags' fake tags of random color names.
+    '''
+    Faker.seed(randint(0, 1000))
+
+    # get set of unique colors
+    colors = set()
+    while len(colors) < num_tags:
+        colors.add(fake.color_name())
+
+    # make tags
+    for color in colors:
+        tag = Tag(name=color)
+        db.session.add(tag)
+
+    db.session.commit()
+
+
+def populate_blog(num_users):
+    populate_users(num_users)
+    populate_posts(num_users)
+    populate_tags()
+
+
 # Create tables
 db.drop_all()
 db.create_all()
 
-# Empty users, posts tables
-User.query.delete()
-Post.query.delete()
+# Empty tables
+for table in [User, Post, Tag, PostTag]:
+    table.query.delete()
 
-# Add users
-populate_users(num_users)
-
-# Add posts
-populate_posts(num_users)
+# Add model instances
+num_users = 5
+populate_blog(num_users)
 

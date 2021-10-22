@@ -6,7 +6,7 @@ New Post
 
 {% block content %}
 <h1>Add Post for {{ user.first_name }} {{ user.last_name }}</h1>
-<form method="POST" action="{{ url_for('post_new', user_id=user.id) }}">
+<form method="POST" action="{{ url_for('post_create', user_id=user.id) }}">
   <p>Title:     <input type="text" name="title"></p>
   <p>Content:  <textarea name="content" rows="4"></textarea></p>
   <button class="btn btn-primary" type="submit">Add</button>
