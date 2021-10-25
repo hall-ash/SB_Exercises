@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Tag {{ tag.name }}{% endblock title %}
+
+{% block content %}
+
+
+<h1>{{ tag.name }}</h1>
+
+{% if tag.posts %}
+  <ul>
+    {% for post in tag.posts %}
+    <li><a href="{{ url_for('post_detail', post_id=post.id) }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <h3>No posts have this tag!</h3>
+{% endif %}
+
+<a class="btn btn-primary" href="{{ url_for('tag_edit', tag_id=tag.id) }}" role="button">Edit</a>
+<a class="btn btn-danger" href="{{ url_for('tag_delete', tag_id=tag.id) }}" role="button">Delete</a>
+
+{% endblock content %}

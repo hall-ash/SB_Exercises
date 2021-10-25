@@ -7,8 +7,26 @@
 <h1>Edit Post</h1>
 <form method="POST" action="{{ url_for('post_edit', post_id=post.id) }}">
   <p>Title:     <input type="text" name="title" value="{{ post.title }}"></p>
-  <p>Content:  <textarea name="content" rows="4" value="{{ post.content }}"></textarea></p>
+  <p>Content:  <textarea name="content" rows="5" value="{{ post.content }}">{{ post.content }}</textarea></p>
   
+  {% if all_tags %}
+  <div class="tag-checkbox-container">
+    <span class="m-2 fw-bold">Tags:</span>
+    <div class="btn-group " role="group" aria-label="Tags checkbox toggle button group">
+      {% for tag in all_tags %}
+        {% if tag in post.tags %}
+          <input type="checkbox" class="btn-check m-2" id="{{ tag.id }}" name="tag_id" autocomplete="off" value="{{ tag.id }}" checked>
+          <label class="btn btn-outline-primary" for="{{ tag.id }}">{{ tag.name }}</label>
+        {% else %}
+          <input type="checkbox" class="btn-check m-2" id="{{ tag.id }}" name="tag_id" value="{{ tag.id }}" autocomplete="off">
+          <label class="btn btn-outline-primary" for="{{ tag.id }}">{{ tag.name }}</label>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <br>
   <a class="btn btn-secondary" href="{{ url_for('user_detail', user_id=post.creator.id) }}" role="button">Cancel</a>
   <button class="btn btn-primary" type="submit">Edit</button>
 </form>

@@ -121,7 +121,9 @@ def post_detail(post_id):
     '''
     post = Post.query.get_or_404(post_id)
 
-    return render_template('post-detail.html', post=post)
+    tags = post.tags
+
+    return render_template('post-detail.html', post=post, tags=tags)
 
 
 @app.route('/posts/<int:post_id>/edit', methods=['GET', 'POST'])
@@ -136,6 +138,15 @@ def post_edit(post_id):
     if request.method == 'POST':
         post.title = request.form['title']
         post.content = request.form['content']
+        checked_tag_ids = request.form.getlist('tag_id')
+
+        # clear previous tags
+        PostTag.query.filter_by(post_id=post_id).delete()
+     
+        # add checked tags to post
+        for tag_id in checked_tag_ids:
+            tag = Tag.query.get(tag_id)
+            post.tags.append(tag)
 
         db.session.add(post)
         db.session.commit()
@@ -143,7 +154,9 @@ def post_edit(post_id):
         return redirect(url_for('post_detail', post_id=post.id))
 
     else:
-        return render_template('post-edit-form.html', post=post)
+        all_tags = Tag.query.all()
+
+        return render_template('post-edit-form.html', post=post, all_tags=all_tags)
 
 
 @app.route('/posts/<int:post_id>/delete')
@@ -163,3 +176,80 @@ def post_delete(post_id):
     db.session.commit()
 
     return redirect(url_for('user_detail', user_id=creator_id))
+
+
+@app.route('/tags')
+def tag_list():
+    '''
+    Show list of all tags.
+    '''
+
+    all_tags = Tag.query.all()
+
+    return render_template('tag-list.html', all_tags=all_tags)
+
+
+@app.route('/tags/<int:tag_id>')
+def tag_detail(tag_id):
+    '''
+    Shows tag detail with links to edit or delete the tag.
+    '''
+
+    tag = Tag.query.get_or_404(tag_id)
+
+    return render_template('tag-detail.html', tag=tag)
+
+
+@app.route('/tags/new', methods=['GET', 'POST'])
+def tag_create():
+    '''
+    Shows a form to add a new tag on GET request.
+    Processes form, adds tag and redirects to tag list on POST request.
+    '''
+    if request.method == 'POST':
+        # add new tag to db
+        tag = Tag(name=request.form['name'])
+
+        db.session.add(tag)
+        db.session.commit()
+
+        return redirect(url_for('tag_list'))
+
+    else:
+        return render_template('tag-create-form.html')
+
+
+@app.route('/tags/<int:tag_id>/edit', methods=['GET', 'POST'])
+def tag_edit(tag_id):
+    '''
+    Shows a form to edit a tag on GET request.
+    Processes form, edits tag, and redirects to tag list on POST request.
+    '''
+
+    # get tag
+    tag = Tag.query.get_or_404(tag_id)
+
+    if request.method == 'POST':
+        # edit tag's name
+        tag.name = request.form['name']
+
+        db.session.add(tag)
+        db.session.commit()
+
+        return redirect(url_for('tag_list'))
+
+    else:
+        return render_template('tag-edit-form.html', tag=tag)
+
+
+@app.route('/tags/<int:tag_id>/delete')
+def tag_delete(tag_id):
+    '''
+    Delete a tag and redirect to tag list page.
+    '''
+
+    Tag.query.filter_by(id=tag_id).delete()
+
+    db.session.commit()
+
+    return redirect(url_for('tag_list'))

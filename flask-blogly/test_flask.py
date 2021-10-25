@@ -1,6 +1,6 @@
 from unittest import TestCase
 from app import app
-from models import db, User, Post
+from models import db, User, Post, Tag, PostTag
 
 # Use test database and don't clutter tests with SQL
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly_test'
@@ -200,3 +200,134 @@ class PostViewsTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertNotIn('Test Title', html)
             
+
+class TagViewsTestCase(TestCase):
+    '''Test Tag views'''
+
+    def setUp(self):
+        # clear tables
+        for table in [Post, User, Tag, PostTag]:
+            table.query.delete()
+
+        # create test user
+        user = User(first_name="first_name1", last_name="last_name1", image_url=test_image_url)
+        
+        db.session.add(user)
+        db.session.commit()
+
+        # create test post
+        post = Post(
+            title='Test Title', 
+            content='Test post content.',
+            creator_id = user.id,
+            )
+
+        db.session.add(post)
+        db.session.commit()
+
+        # create test tag and add to post
+        tag = Tag(name='test_tag')
+        post.tags.append(tag)
+
+        db.session.add(post)
+        db.session.commit()
+
+        self.tag_id = tag.id
+
+    def tearDown(self):
+        db.session.rollback()
+
+    def test_tag_list(self):
+        with app.test_client() as client:
+            resp = client.get('/tags')
+
+            html = resp.get_data(as_text=True)
+            self.assertEqual(resp.status_code, 200)
+
+            tag_list_title = '<h1>Tags</h1>'
+            tag_name = 'test_tag'
+
+            for component in [tag_list_title, tag_name]:
+                self.assertIn(component, html)
+            
+    def test_tag_detail(self):
+        with app.test_client() as client:
+            resp = client.get(f'/tags/{self.tag_id}')
+
+            html = resp.get_data(as_text=True)
+            self.assertEqual(resp.status_code, 200)
+
+            post_title = 'Test Title'
+            tag_detail_title = '<h1>test_tag</h1>'
+
+            for component in [post_title, tag_detail_title]:
+                self.assertIn(component, html)
+    
+    def test_tag_create_form(self):
+        with app.test_client() as client:
+            resp = client.get(f'/tags/new')
+
+            html = resp.get_data(as_text=True)
+            self.assertEqual(resp.status_code, 200)
+
+            form_title = '<h1>Create a tag</h1>'
+            name_input = '<input type="text" name="name" placeholder="Enter a name for the tag">'
+
+            for component in [form_title, name_input]:
+                self.assertIn(component, html)
+
+    def test_tag_create_submit(self):
+        with app.test_client() as client:
+            new_tag = {'name': 'new_tag_name'}
+
+            resp = client.post(f'/tags/new', data=new_tag, follow_redirects=True)
+
+            html = resp.get_data(as_text=True)
+            self.assertEqual(resp.status_code, 200)
+
+            tag_list_title = '<h1>Tags</h1>'
+            tag_name = 'test_tag'
+            new_tag_name = 'new_tag_name'
+
+            for component in [tag_list_title, tag_name, new_tag_name]:
+                self.assertIn(component, html)
+
+    def test_tag_edit_form(self):
+        with app.test_client() as client:
+            resp = client.get(f'/tags/{self.tag_id}/edit')
+
+            html = resp.get_data(as_text=True)
+            self.assertEqual(resp.status_code, 200)
+
+            form_title = '<h1>Edit a tag</h1>'
+            name_input = '<input type="text" name="name" value="test_tag">'
+
+            for component in [form_title, name_input]:
+                self.assertIn(component, html)
+
+    def test_tag_edit_submit(self):
+        with app.test_client() as client:
+            edited_tag = {'name': 'test tag'}
+
+            resp = client.post(f'/tags/{self.tag_id}/edit', data=edited_tag, follow_redirects=True)
+
+            html = resp.get_data(as_text=True)
+            self.assertEqual(resp.status_code, 200)
+
+            tag_list_title = '<h1>Tags</h1>'
+            edited_tag_name = 'test tag'
+
+            for component in [tag_list_title, edited_tag_name]:
+                self.assertIn(component, html)
+
+    def test_tag_delete(self):
+        with app.test_client() as client:
+            endpoint = f'/tags/{self.tag_id}/delete'
+
+            # redirects to tag list
+            resp = client.get(endpoint, follow_redirects=True)
+
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertNotIn('test_tag', html)

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+New Tag
+{% endblock title %}
+
+{% block content %}
+<h1>Edit a tag</h1>
+<form method="POST" action="{{ url_for('tag_edit', tag_id=tag.id) }}">
+  <p>Name:     <input type="text" name="name" value="{{ tag.name }}"></p>
+  <a class="btn btn-secondary" href="{{ url_for('tag_list') }}" role="button">Cancel</a>
+  <button class="btn btn-primary" type="submit">Edit</button>
+</form>
+{% endblock content %}

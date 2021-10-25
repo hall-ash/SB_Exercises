@@ -9,6 +9,19 @@ New Post
 <form method="POST" action="{{ url_for('post_create', user_id=user.id) }}">
   <p>Title:     <input type="text" name="title"></p>
   <p>Content:  <textarea name="content" rows="4"></textarea></p>
+ 
+  {% if all_tags %}
+  <div class="tag-checkbox-container">
+    <div class="m-2 fw-bold">Tags:</div>
+    <div class="btn-group" role="group" aria-label="Tags checkbox toggle button group">
+      {% for tag in all_tags %}
+        <input type="checkbox" class="btn-check m-2" id="{{ tag.id }}" name="{{ tag.id }}" autocomplete="off">
+        <label class="btn btn-outline-primary" for="{{ tag.id }}">{{ tag.name }}</label>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
   <button class="btn btn-primary" type="submit">Add</button>
   <a class="btn btn-secondary" href="{{ url_for('user_detail', user_id=user.id) }}" role="button">Cancel</a>
 </form>
