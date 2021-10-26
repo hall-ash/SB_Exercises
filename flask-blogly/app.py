@@ -14,6 +14,11 @@ from flask_debugtoolbar import DebugToolbarExtension
 app.config['SECRET_KEY'] = "SECRET!"
 debug = DebugToolbarExtension(app)
 
+@app.errorhandler(404)
+def page_not_found(e):
+    '''Show 404 page.'''
+    return render_template('404.html'), 404
+
 @app.route('/')
 def index():
     return redirect(url_for('list_users'))
@@ -78,12 +83,14 @@ def user_edit(user_id):
         return render_template('user-edit-form.html', user=user)
 
     
-@app.route('/users/<int:user_id>/delete')
+@app.route('/users/<int:user_id>/delete', methods=['POST'])
 def user_delete(user_id):
     '''Deletes the user.'''
 
-    User.query.filter_by(id=user_id).delete()
+    user = User.query.get_or_404(user_id)
 
+    # delete user
+    db.session.delete(user)
     db.session.commit()
 
     return redirect(url_for('list_users'))
@@ -159,23 +166,18 @@ def post_edit(post_id):
         return render_template('post-edit-form.html', post=post, all_tags=all_tags)
 
 
-@app.route('/posts/<int:post_id>/delete')
+@app.route('/posts/<int:post_id>/delete', methods=['POST'])
 def post_delete(post_id):
     '''
     Delete the post.
     '''
-    query = Post.query.filter_by(id=post_id)
-
-    # get post instance to access creator_id
-    post = query.one()
-    creator_id = post.creator_id
+    post = Post.query.get_or_404(post_id)
 
     # delete post
-    query.delete()
-
+    db.session.delete(post)
     db.session.commit()
 
-    return redirect(url_for('user_detail', user_id=creator_id))
+    return redirect(url_for('user_detail', user_id=post.creator_id))
 
 
 @app.route('/tags')
@@ -242,14 +244,15 @@ def tag_edit(tag_id):
         return render_template('tag-edit-form.html', tag=tag)
 
 
-@app.route('/tags/<int:tag_id>/delete')
+@app.route('/tags/<int:tag_id>/delete', methods=['POST'])
 def tag_delete(tag_id):
     '''
     Delete a tag and redirect to tag list page.
     '''
+    tag = Tag.query.get_or_404(tag_id)
 
-    Tag.query.filter_by(id=tag_id).delete()
-
+    # delete tag
+    db.session.delete(tag)
     db.session.commit()
 
     return redirect(url_for('tag_list'))

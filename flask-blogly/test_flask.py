@@ -85,7 +85,7 @@ class UserViewsTestCase(TestCase):
     def test_user_delete(self):
         with app.test_client() as client:
 
-            resp = client.get(f'/users/{self.user_id}/delete', follow_redirects=True)
+            resp = client.post(f'/users/{self.user_id}/delete', follow_redirects=True)
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
@@ -193,7 +193,7 @@ class PostViewsTestCase(TestCase):
         with app.test_client() as client:
             endpoint = f'/posts/{self.post_id}/delete'
 
-            resp = client.get(endpoint, follow_redirects=True)
+            resp = client.post(endpoint, follow_redirects=True)
 
             html = resp.get_data(as_text=True)
 
@@ -325,7 +325,7 @@ class TagViewsTestCase(TestCase):
             endpoint = f'/tags/{self.tag_id}/delete'
 
             # redirects to tag list
-            resp = client.get(endpoint, follow_redirects=True)
+            resp = client.post(endpoint, follow_redirects=True)
 
             html = resp.get_data(as_text=True)
 
