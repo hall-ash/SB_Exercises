@@ -55,8 +55,12 @@
 
   <div class="container">
     <!-- Flash messages -->
-    {% for msg in get_flashed_messages() %}
-      <div class="alert alert-danger">{{ msg }}</div>
+    {% for category, msg in get_flashed_messages() %}
+      {% if category %}
+      <div class="alert alert-{{ category }}">{{ msg }}</div>
+      {% else %}
+      <div class="alert alert-info">{{ msg }}</div>
+      {% endif %}
     {% endfor %}
 
     <!-- Page content -->

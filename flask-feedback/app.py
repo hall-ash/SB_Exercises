@@ -20,12 +20,13 @@ def index():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    '''Display form to register a user'''
+    '''Display form to register a user and register user on submit.'''
 
     form = RegisterUserForm()
 
     # register the user
     if form.validate_on_submit():
+        # ADD CODE to handle error if username is already taken
         user = User.register(username=form.username.data,
                             password=form.password.data,
                             email=form.email.data,
@@ -38,7 +39,7 @@ def register():
         # keep user logged in
         session['username'] = user.username
 
-        flash('Successfully registered!')
+        flash('Successfully registered!', 'success')
         return redirect(url_for('user_detail', username=user.username))
 
     # display the registration form
@@ -54,7 +55,7 @@ def user_detail(username):
 
     # not logged in 
     if not session_username:
-        flash('You must be logged in.')
+        flash('You must be logged in.', 'info')
         return redirect(url_for('index'))
 
     # logged in, not authorized
@@ -70,7 +71,7 @@ def user_detail(username):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    '''Display form to login'''
+    '''Display form to login and login authenticated user on submit.'''
 
     form = LoginUserForm()
 
@@ -85,7 +86,7 @@ def login():
             # keep user logged in 
             session['username'] = user.username
 
-            flash(f'Welcome {user.first_name} {user.last_name}!')
+            flash(f'Welcome {user.first_name} {user.last_name}!', 'primary')
             return redirect(url_for('user_detail', username=user.username))
         
         else:
@@ -113,7 +114,7 @@ def delete_user(username):
 
     # not logged in  or not authorized
     if not session_username or username != session_username:
-        flash('Unauthorized access.')
+        flash('Unauthorized access.', 'danger')
         return redirect(url_for('index'))
 
     # logged in and authorized
@@ -127,7 +128,7 @@ def delete_user(username):
         # clear username from session
         session.pop('username')
 
-        flash('Your account was successfully deleted.')
+        flash('Your account was successfully deleted.', 'info')
         return redirect(url_for('index'))
 
 
@@ -164,7 +165,7 @@ def feedback_form(username):
 
     # not logged in 
     else:
-        flash('You must be logged in.')
+        flash('You must be logged in.', 'info')
         return redirect(url_for('index'))
 
 
@@ -198,7 +199,7 @@ def edit_feedback(feedback_id):
 
     # unauthorized user or not logged in
     else:
-        flash('Unauthorized access.')
+        flash('Unauthorized access.', 'danger')
         return redirect(url_for('index'))
 
 
@@ -219,12 +220,12 @@ def delete_feedback(feedback_id):
         db.session.delete(feedback)
         db.session.commit()
 
-        flash('Feedback successfully deleted.')
+        flash('Feedback successfully deleted.', 'info')
 
         return redirect(url_for('user_detail', username=session_username))
 
     else:
-        flash('Unauthorized access.')
+        flash('Unauthorized access.', 'danger')
         return redirect(url_for('index'))
 
 
