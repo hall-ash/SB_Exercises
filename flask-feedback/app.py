@@ -27,7 +27,7 @@ def register():
 
     # register the user
     if form.validate_on_submit():
-        # ADD CODE to handle error if username is already taken
+        
         user = User.register(username=form.username.data,
                             password=form.password.data,
                             email=form.email.data,
@@ -53,6 +53,7 @@ def register():
     # display the registration form
     else:
         return render_template('register.html', form=form)
+
 
 @app.route('/users/<username>')
 def user_detail(username):
