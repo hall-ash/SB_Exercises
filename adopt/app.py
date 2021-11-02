@@ -59,9 +59,10 @@ def pet_detail(pet_id):
     form = EditPetForm(obj=pet)
 
     if form.validate_on_submit():
-        pet.photo_url = form.photo_url.data
-        pet.notes = form.notes.data
-        pet.available = form.available.data
+        # pet.photo_url = form.photo_url.data
+        # pet.notes = form.notes.data
+        # pet.available = form.available.data
+        form.populate_obj(pet)
 
         db.session.commit()
 
