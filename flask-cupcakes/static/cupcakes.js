@@ -3,7 +3,7 @@ const $addCupcakeBtn = $('#add-cupcake-btn');
 const $addCupcakeForm = $('#add-cupcake-form');
 const $cupcakesContainer = $('#cupcakes-container');
 
-const BASE_URL = '/api'
+const BASE_URL = '/api';
 
 /**
  * Generates the markup for a cupcake. 
