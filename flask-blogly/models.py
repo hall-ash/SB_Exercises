@@ -60,7 +60,7 @@ class Post(db.Model):
 
     created_at = db.Column(
         db.TIMESTAMP,
-        default=datetime.utcnow(),
+        default=datetime.utcnow,
         nullable=False,
     )
 
