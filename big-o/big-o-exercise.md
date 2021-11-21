@@ -12,36 +12,47 @@
 8. O(2^n + n^2) = O(2^n)
 9. O(5 + 3 + 1) = O(1)
 10. O(n + n^(1/2) + n^2 + n * log(n)^10) = O(n^2)
+
 ---
 
 ### Step Two: Calculating Time Complexity
 ###### Determine the time complexities for each of the following functions.
 
-`function logUpTo(n) {
+```
+function logUpTo(n) {
   for (let i = 1; i <= n; i++) {
     console.log(i);
   }
-}`
-
+}
+```
 O(n)
+
 ---
-`function logAtLeast10(n) {
+
+```
+function logAtLeast10(n) {
   for (let i = 1; i <= Math.max(n, 10); i++) {
     console.log(i);
   }
-}`
-
+}
+```
 O(n)
+
 ---
-`function logAtMost10(n) {
+
+```
+function logAtMost10(n) {
   for (let i = 1; i <= Math.min(n, 10); i++) {
     console.log(i);
   }
-}`
-
+}
+```
 O(1)
+
 ---
-`function onlyElementsAtEvenIndex(array) {
+
+```
+function onlyElementsAtEvenIndex(array) {
   let newArray = [];
   for (let i = 0; i < array.length; i++) {
     if (i % 2 === 0) {
@@ -49,11 +60,14 @@ O(1)
     }
   }
   return newArray;
-}`
-
+}
+```
 O(n)
+
 ---
-`function subtotals(array) {
+
+```
+function subtotals(array) {
   let subtotalArray = [];
   for (let i = 0; i < array.length; i++) {
     let subtotal = 0;
@@ -63,11 +77,14 @@ O(n)
     subtotalArray.push(subtotal);
   }
   return subtotalArray;
-}`
-
+}
+```
 O(n^2)
+
 ---
-`function vowelCount(str) {
+
+```
+function vowelCount(str) {
   let vowelCount = {};
   const vowels = "aeiouAEIOU";
 
@@ -82,9 +99,10 @@ O(n^2)
   }
 
   return vowelCount;
-}`
-
+}
+```
 O(n)
+
 ---
 
 ### Step 3 - short answer
