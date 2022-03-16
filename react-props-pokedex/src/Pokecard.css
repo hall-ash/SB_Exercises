@@ -1,0 +1,14 @@
+.Pokecard {
+  display: inline-block;
+  width: 15em;
+  background-color: lightyellow;
+  border-radius: 10px;
+  text-align: center;
+  padding: 1em;
+  margin: 1em;
+}
+
+.Pokecard-image {
+  height: 200px;
+  width: 200px;
+}
