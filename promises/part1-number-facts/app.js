@@ -9,7 +9,7 @@ const getRand = (max) => Math.floor(Math.random() * max) + 1;
 const favNum = getRand(100);
 
 // send get request for single fact of favNum
-const favNumPromise = $.getJSON(`${API_URL}/${favNum}/trivia?json`)
+$.getJSON(`${API_URL}/${favNum}/trivia?json`)
   .then(data => $numFactLi.append(data.text));
 
 // get array of random numbers of length arrLength
