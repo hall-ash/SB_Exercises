@@ -6,7 +6,7 @@ const $fourFactsUl = $('#four-number-facts');
 
 // get random integer from 1 to max inclusive
 const getRand = (max) => Math.floor(Math.random() * max) + 1;
-const favNum = getRand(100);
+const favNum = getRand(max);
 
 // send get request for single fact of favNum
 $.getJSON(`${API_URL}/${favNum}/trivia?json`)
