@@ -1,4 +1,4 @@
-const API_URL = 'https://deckofcardsapi.com/api/deck';
+const BASE_URL = 'https://deckofcardsapi.com/api/deck';
 
 const shuffleAndDrawCards = numCardsToDraw => {
 
@@ -7,9 +7,9 @@ const shuffleAndDrawCards = numCardsToDraw => {
     return;
   }
 
-  $.getJSON(`${API_URL}/new/shuffle/?deck_count=1`) // shuffle cards
+  $.getJSON(`${BASE_URL}/new/shuffle/?deck_count=1`) // shuffle cards
   .then(deck => {
-    return $.getJSON(`${API_URL}/${deck.deck_id}/draw/?count=${numCardsToDraw}`); // draw card
+    return $.getJSON(`${BASE_URL}/${deck.deck_id}/draw/?count=${numCardsToDraw}`); // draw card
   })
   .then(cardsData => {
     const cards = cardsData.cards; // get array of cards
@@ -47,7 +47,7 @@ shuffleAndDrawCards(2);
  const $cardImg = $('img');
 
  const shuffleCards = () => {
-   $.getJSON(`${API_URL}/new/shuffle/?deck_count=1`) 
+   $.getJSON(`${BASE_URL}/new/shuffle/?deck_count=1`) 
    .then(deck => {
      deckID = deck.deck_id;
      $drawBtn.show();
@@ -56,7 +56,7 @@ shuffleAndDrawCards(2);
  };
 
  const drawCard = () => {
-  $.getJSON(`${API_URL}/${deckID}/draw/?count=1`)
+  $.getJSON(`${BASE_URL}/${deckID}/draw/?count=1`)
   .then(cardsData => {
     console.log('cardsData', cardsData);
     const card = cardsData.cards[0]; 
