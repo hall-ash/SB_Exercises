@@ -57,6 +57,7 @@ app.get('/mode', (req, res, next) => {
 });
 
 // 404 handler
+// runs if no match for any handlers above
 app.use((req, res, next) => {
   const notFoundError = new ExpressError('Not Found', 404);
   return next(notFoundError);
