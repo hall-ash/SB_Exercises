@@ -54,6 +54,13 @@ describe('item routes tests', () => {
         expect(res.body).toEqual({'error': UnableToAddErr});
       });
 
+      it(`should send a 400 error if the request contains an empty JSON body`, async () => {
+        const res = await request(app).post(ITEM_PATH).send({});
+
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toEqual({'error': UnableToAddErr});
+      });
+
       it(`should send a 400 error if the request contains JSON data that does not have 'name' and 'price' props`, async () => {
         const invalidData = {'invalid_prop': 'name', 'price': item.price};
         
