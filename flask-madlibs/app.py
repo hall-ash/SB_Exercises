@@ -31,7 +31,7 @@ stories = {
   No need for a {noun1} in a bottle or a crystal ball, let our {noun2} predict your 
   future; {verb}, fold, and amaze your {plural_noun} with your new {adjective} powers.
   '''
-  )
+  ),
 }
 
 cur_story = None
