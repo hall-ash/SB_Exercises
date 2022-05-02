@@ -1,0 +1,9 @@
+.Todo-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.Todo-item button {
+  margin-left: 10px;
+}
