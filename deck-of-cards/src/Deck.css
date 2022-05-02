@@ -1,0 +1,19 @@
+body {
+  background-color: green;
+}
+
+.Deck {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Deck button {
+  margin-top: 20vh;
+  margin-bottom: 2rem;
+  height: 3rem;
+  width: 10rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
