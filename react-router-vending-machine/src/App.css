@@ -1,0 +1,11 @@
+
+a {
+  background-color: black;
+  opacity: 0.8;
+  padding: 3rem;
+  border-radius: 3rem;
+  font-size: 5rem;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}

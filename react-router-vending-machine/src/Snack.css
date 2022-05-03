@@ -1,0 +1,15 @@
+.Snack {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+a {
+  font-size: 5rem;
+  margin: 1rem;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
