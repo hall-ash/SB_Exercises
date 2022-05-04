@@ -1,0 +1,10 @@
+.Dog {
+  margin-bottom: 2rem;
+  
+}
+
+.Dog a {
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+}

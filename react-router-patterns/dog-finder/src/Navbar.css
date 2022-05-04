@@ -1,0 +1,17 @@
+nav {
+  background-color: black;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+nav a {
+  margin: 2rem;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
+}
+
+nav a:hover {
+  text-decoration: none;
+}
