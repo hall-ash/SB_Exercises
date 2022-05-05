@@ -1,0 +1,26 @@
+nav {
+  background-color: black;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  padding: 1rem;
+  padding-bottom: 3rem;
+}
+
+nav p {
+  /* margin-bottom: 1rem; */
+}
+
+nav a {
+  text-decoration: none;
+  color: black;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+nav a:hover {
+  text-decoration: none;
+  color: white;
+  background-color: gray;
+}

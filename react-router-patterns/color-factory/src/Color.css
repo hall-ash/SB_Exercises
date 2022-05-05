@@ -1,0 +1,19 @@
+.Color {
+  height: 100vh;
+  width: 100vw;
+  font-weight: bold;
+}
+
+.Color h1 {
+  margin-top: 5rem;
+  font-size: 15rem;
+}
+
+.Color a {
+  text-decoration: none;
+  font-size: 5rem;
+}
+
+.Color a:hover {
+  font-weight: bolder;
+}
