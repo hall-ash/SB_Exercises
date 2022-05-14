@@ -38,7 +38,7 @@ class LinkedList {
   push(val) {
     const newNode = new Node(val);
 
-    if (!this.head) { // empty list
+    if (this.length === 0) {
       this.head = newNode;
       this.tail = newNode;
     }
@@ -73,13 +73,21 @@ class LinkedList {
   pop() {
 
     if (this.length === 0) {
-      throw Error('Empty list')
+      return null;
     }
 
     const tailVal = this.tail.val;
+    
+    if (this.length === 1) {
+      this.tail = null;
+      this.head = null;
+      this.length--;
+
+      return tailVal;
+    }
 
     // get penultimate node
-    const penultNode = this._get(this.length - 1);
+    const penultNode = this._get(this.length - 2);
 
     // detach last node
     penultNode.next = null;
@@ -97,7 +105,7 @@ class LinkedList {
   shift() {
 
     if (this.length === 0) {
-      throw new Error('Empty list')
+      return null;
     }
 
     const oldHead = this.head;
@@ -108,9 +116,9 @@ class LinkedList {
     // detach old head from list
     oldHead.next = null;
 
-    this.length--;
-
     if (this.length === 1) this.tail = this.head;
+
+    this.length--;
 
     return oldHead.val;
   }
@@ -136,26 +144,45 @@ class LinkedList {
 
   insertAt(idx, val) {
 
-    const prevNode = this._get(idx - 1);
+    const newNode = new Node(val);
+    if (idx > this.length) throw new Error('Invalid index.');
 
-    // insert new node into list
-    const newNode = Node(val);
-    const nextNode = prevNode.next;
-    prevNode.next = newNode;
-    newNode.next = nextNode;
+    // insert at head
+    if (idx === 0) {
+      return this.unshift(val);
+    } else {
+      const prevNode = this._get(idx - 1);
 
+      // insert new node into list
+      const nextNode = prevNode.next;
+      prevNode.next = newNode;
+      newNode.next = nextNode;
+
+      if (this.length === idx) this.tail = newNode;
+    }
+
+    this.length++;
   }
 
   /** removeAt(idx): return & remove item at idx. */
 
   removeAt(idx) {
+    if (!this.head) return null;
+    if (idx >= this.length) throw new Error('Invalid index.');
 
+    // remove at head
+    if (idx === 0) {
+      return this.shift();
+    }
     const prevNode = this._get(idx - 1);
 
     const nodeToDelete = prevNode.next;
     prevNode.next = nodeToDelete.next;
     nodeToDelete.next = null;
+
+    if (idx === this.length - 1) this.tail = prevNode;
     
+    this.length--;
     return nodeToDelete.val;
   }
 
@@ -168,14 +195,12 @@ class LinkedList {
     let sum = 0;
 
     while (curNode) {
-      curNode = curNode.next;
       sum += curNode.val;
+      curNode = curNode.next;
     }
 
     return sum / this.length;
   }
 }
 
-// module.exports = LinkedList;
-const ll = new LinkedList([1, 2, 3]);
-console.log(ll._get(3).val);
+module.exports = LinkedList;

@@ -109,6 +109,7 @@ describe("insertAt", function() {
     expect(lst.head.next.next.next.val).toBe(15);
     expect(lst.head.next.next.next.next.val).toBe(20);
 
+    // insert at tail
     lst.insertAt(5, 25);
     expect(lst.head.next.next.next.next.next.val).toBe(25);
     expect(lst.tail.val).toBe(25);
@@ -122,16 +123,53 @@ describe("insertAt", function() {
     expect(lst.head.val).toBe(5);
     expect(lst.tail.val).toBe(5);
   });
+
+  it('throws error if idx > length', () => {
+    let list = new LinkedList();
+    expect(() => list.insertAt(1, 5)).toThrowError('Invalid index.')
+  });
+
 });
 
 describe("removeAt", function() {
-  it("removes from 1-item list", function() {
+  it('returns null if removing from an empty list', () => {
+    let list = new LinkedList([]);
+
+    expect(list.removeAt(0)).toBeNull();
+    expect(list.removeAt(1)).toBeNull();
+  });
+
+  it('throws error if idx >= length where length > 0', () => {
+    let list = new LinkedList([1]);
+
+    expect(() => list.removeAt(1)).toThrowError('Invalid index.');
+  });
+
+  it("removes head node from 1-item list (idx === 0)", function() {
     let lst = new LinkedList(["a"]);
 
     lst.removeAt(0);
     expect(lst.length).toBe(0);
     expect(lst.head).toBe(null);
     expect(lst.tail).toBe(null);
+  });
+
+  it("removes tail node from list (idx === length - 1)", function() {
+    let lst = new LinkedList(["a", 1]);
+
+    lst.removeAt(1);
+    expect(lst.length).toBe(1);
+    expect(lst.head.val).toBe('a');
+    expect(lst.tail.val).toBe('a');
+  });
+
+  it("removes middle node from list (idx > 0 && idx < length - 1)", function() {
+    let lst = new LinkedList(["a", 1, 2]);
+
+    lst.removeAt(1);
+    expect(lst.length).toBe(2);
+    expect(lst.head.val).toBe('a');
+    expect(lst.tail.val).toBe(2);
   });
 });
 
