@@ -60,6 +60,11 @@ describe("pop", function() {
     expect(lst.head).toBe(null);
     expect(lst.length).toBe(0);
   });
+
+  it('throws error if empty list', () => {
+    let list = new LinkedList();
+    expect(() => list.shift()).toThrowError('Empty list');
+  })
 });
 
 describe("shift", function() {
@@ -75,6 +80,11 @@ describe("shift", function() {
     expect(lst.head).toBe(null);
     expect(lst.length).toBe(0);
   });
+
+  it('throws error if list is empty', () => {
+    let list = new LinkedList();
+    expect(() => list.shift()).toThrowError('Empty list');
+  })
 });
 
 describe("getAt", function() {
@@ -84,6 +94,12 @@ describe("getAt", function() {
     expect(lst.getAt(0)).toBe(5);
     expect(lst.getAt(1)).toBe(10);
   });
+
+  it('throws error if index out of bounds', () => {
+    let list = new LinkedList();
+    expect(() => list.getAt(-1)).toThrowError('Invalid index');
+    expect(() => list.getAt(0)).toThrowError('Invalid index');
+  })
 });
 
 describe("setAt", function() {
@@ -95,6 +111,12 @@ describe("setAt", function() {
     expect(lst.head.val).toBe(1);
     expect(lst.head.next.val).toBe(2);
   });
+
+  it('throws error if index out of bounds', () => {
+    let list = new LinkedList();
+    expect(() => list.getAt(-1)).toThrowError('Invalid index');
+    expect(() => list.getAt(0)).toThrowError('Invalid index');
+  })
 });
 
 describe("insertAt", function() {
@@ -126,23 +148,22 @@ describe("insertAt", function() {
 
   it('throws error if idx > length', () => {
     let list = new LinkedList();
-    expect(() => list.insertAt(1, 5)).toThrowError('Invalid index.')
+    expect(() => list.insertAt(1, 5)).toThrowError('Invalid index')
   });
 
 });
 
 describe("removeAt", function() {
-  it('returns null if removing from an empty list', () => {
+  it('throws error if removing from an empty list', () => {
     let list = new LinkedList([]);
 
-    expect(list.removeAt(0)).toBeNull();
-    expect(list.removeAt(1)).toBeNull();
+    expect(() => list.removeAt(0)).toThrowError('Empty list');
   });
 
   it('throws error if idx >= length where length > 0', () => {
     let list = new LinkedList([1]);
 
-    expect(() => list.removeAt(1)).toThrowError('Invalid index.');
+    expect(() => list.removeAt(1)).toThrowError('Invalid index');
   });
 
   it("removes head node from 1-item list (idx === 0)", function() {

@@ -22,7 +22,7 @@ class LinkedList {
 
   _get(idx) {
     if (idx < 0 || idx >= this.length) {
-      throw new Error('Invalid index.')
+      throw new Error('Invalid index')
     }
 
     let curNode = this.head;
@@ -73,7 +73,7 @@ class LinkedList {
   pop() {
 
     if (this.length === 0) {
-      return null;
+      throw new Error('Empty list');
     }
 
     const tailVal = this.tail.val;
@@ -105,7 +105,7 @@ class LinkedList {
   shift() {
 
     if (this.length === 0) {
-      return null;
+      throw new Error('Empty list')
     }
 
     const oldHead = this.head;
@@ -145,7 +145,7 @@ class LinkedList {
   insertAt(idx, val) {
 
     const newNode = new Node(val);
-    if (idx > this.length) throw new Error('Invalid index.');
+    if (idx > this.length) throw new Error('Invalid index');
 
     // insert at head
     if (idx === 0) {
@@ -167,8 +167,8 @@ class LinkedList {
   /** removeAt(idx): return & remove item at idx. */
 
   removeAt(idx) {
-    if (!this.head) return null;
-    if (idx >= this.length) throw new Error('Invalid index.');
+    if (!this.head) throw new Error('Empty list');
+    if (idx >= this.length) throw new Error('Invalid index');
 
     // remove at head
     if (idx === 0) {
