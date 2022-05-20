@@ -26,8 +26,8 @@ class BinaryTree {
     // leaf node
     if (!node.left && !node.right) return 1;
 
-    let leftTree = this._depthHelper(node.left, findMin);
-    let rightTree = this._depthHelper(node.right, findMin);
+    const leftTree = this._depthHelper(node.left, findMin);
+    const rightTree = this._depthHelper(node.right, findMin);
 
     if (findMin) return Math.min(leftTree, rightTree) + 1;
     else return Math.max(leftTree, rightTree) + 1; // find max depth
@@ -48,8 +48,8 @@ class BinaryTree {
     const maxSumHelper = node => {
       if (!node) return 0;
   
-      let leftPath = Math.max(0, maxSumHelper(node.left));
-      let rightPath = Math.max(0, maxSumHelper(node.right));
+      const leftPath = Math.max(0, maxSumHelper(node.left));
+      const rightPath = Math.max(0, maxSumHelper(node.right));
       
       sum = Math.max(leftPath + rightPath + node.val, sum);
       
@@ -70,11 +70,11 @@ class BinaryTree {
   _nextLargerHelper(node, lowerBound) {
     if (!node) return null;
 
-    let nodeVal = node.val > lowerBound ? node.val : Number.MAX_VALUE;
+    const nodeVal = node.val > lowerBound ? node.val : Number.MAX_VALUE;
     if (!node.left && !node.right) return nodeVal;
 
-    let leftNodeVal = this._nextLargerHelper(node.left, lowerBound);
-    let rightNodeVal = this._nextLargerHelper(node.right, lowerBound);
+    const leftNodeVal = this._nextLargerHelper(node.left, lowerBound);
+    const rightNodeVal = this._nextLargerHelper(node.right, lowerBound);
 
     return Math.min(leftNodeVal, rightNodeVal, nodeVal);
   }
